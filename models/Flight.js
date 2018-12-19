@@ -22,9 +22,16 @@ const getFlightsFromFile = (callback) => {
 };
 
 const Flight = class {
-    constructor(id, dateTime) {
+    constructor(id, squadLeaderId, squadCapacity, rendezvous, destination, dateTime) {
+        console.log(squadLeaderId);
+        console.log(dateTime);
         this.id = id;
+        this.leaderId = squadLeaderId;
+        this.capacity = squadCapacity;
+        this.rendezvous = rendezvous;
+        this.destination = destination;
         this.dateTime = dateTime;
+
         this.date = dateTime.toDateString();
         this.time = dateTime.toLocaleTimeString();
     }

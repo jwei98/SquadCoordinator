@@ -1,6 +1,29 @@
 <%/* TODO: converting datetime to correct format is hacky */%>
 <form action="<%= editing ? '/edit-flight' : '/add-flight' %>" method="POST">
+
+    <label title="squadLeaderId">User ID: </label>
+    <input type="number" name="squadLeaderId" value="<% if (editing) { %><%=flight.leaderId%><%}%>">
+    <br>
+
+    <label title="squadCapacity">Squad Capacity: </label>
+    <input type="number" name="squadCapacity" value="<% if (editing) { %><%=flight.capacity%><%}%>">
+    <br>
+
+    <label title="rendezvous">Rendezvous @: </label>
+    <input type="text" name="rendezvous" value="<% if (editing) { %><%=flight.rendezvous%><%}%>">
+    <br>
+
+    <label title="destination">Destination @: </label>
+    <input type="text" name="destination" value="<% if (editing) { %><%=flight.destination%><%}%>">
+    <br>
+
+    <label title="flightDateTime">Date/Time: </label>
     <input type="datetime-local" name="flightDateTime" value="<% if (editing) { %><%=flight.dateTime.substring(0,flight.dateTime.length-8)%><%}%>">
+
     <input type="hidden" name="flightId" value="<% if (editing) { %><%=flight.id%><%}%>">
-    <button type="submit"><%= editing ? 'Update Flight' : 'Add Flight' %></button>
+
+    <br>
+    <button type="submit">
+        <%= editing ? 'Update Flight' : 'Add Flight' %>
+    </button>
 </form>

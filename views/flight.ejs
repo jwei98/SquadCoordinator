@@ -11,6 +11,12 @@
             at
             <%= flight.time %>
         </h2>
+        <h2>
+            Rendezvous @
+            <%= flight.rendezvous %>
+            to go to
+            <%= flight.destination %>
+        </h2>
         <form action="/edit-flight/<%= flight.id %>" method="GET">
             <button type="submit">Edit Flight</button>
         </form>

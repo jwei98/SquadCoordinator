@@ -11,7 +11,12 @@
             <ul>
                 <% for (let flight of flights) { %>
                 <li>
-                    <a href="/flights/<%= flight.id %>"><%= flight.date%> at <%= flight.time%></a>
+                    <a href="/flights/<%= flight.id %>">
+                        <%= flight.date%> at
+                        <%= flight.time%>. Squad from
+                        <%= flight.rendezvous %> to
+                        <%= flight.destination %>
+                    </a>
                 </li>
                 <% } %>
             </ul>

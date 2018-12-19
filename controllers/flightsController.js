@@ -54,19 +54,24 @@ exports.getSquads = (req, res, next) => {
 };
 
 // POST routes
-const createFlight = (flightId, dt) => {
-    const dateTime = new Date(dt);
-    const newFlight = new Flight(flightId, dateTime);
+const createFlight = (flightId, req) => {
+    const squadLeaderId = req.body.squadLeaderId;
+    const squadCapacity = req.body.squadCapacity;
+    const rendezvous = req.body.rendezvous;
+    const destination = req.body.destination;
+
+    const dateTime = new Date(req.body.flightDateTime);
+    const newFlight = new Flight(flightId, squadLeaderId, squadCapacity, rendezvous, destination, dateTime);
     newFlight.save();
 };
 
 exports.postFlight = (req, res, next) => {
-    createFlight(null, req.body.flightDateTime);
+    createFlight(null, req);
     res.redirect('/flights');
 };
 
 exports.postEditFlight = (req, res, next) => {
-    createFlight(req.body.flightId, req.body.flightDateTime);
+    createFlight(req.body.flightId, req);
     res.redirect('/flights');
 };
 

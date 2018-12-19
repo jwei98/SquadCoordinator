@@ -1,0 +1,23 @@
+<%- include('includes/head.ejs') %>
+<link rel="stylesheet" href="/css/flights.css">
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h1>Flights!</h1>
+        <% if (flights.length > 0) { %>
+        <div class="grid">
+            <ul>
+                <% for (let flight of flights) { %>
+                <li>
+                    <a href="/flights/<%= flight.id %>"><%= flight.date%> at <%= flight.time%></a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+        <% } else { %>
+        <h3>No Flights Listed</h3>
+        <% } %>
+    </main>
+    <%- include('includes/end.ejs') %>

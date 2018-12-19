@@ -1,0 +1,6 @@
+<%/* TODO: converting datetime to correct format is hacky */%>
+<form action="<%= editing ? '/edit-flight' : '/add-flight' %>" method="POST">
+    <input type="datetime-local" name="flightDateTime" value="<% if (editing) { %><%=flight.dateTime.substring(0,flight.dateTime.length-8)%><%}%>">
+    <input type="hidden" name="flightId" value="<% if (editing) { %><%=flight.id%><%}%>">
+    <button type="submit"><%= editing ? 'Update Flight' : 'Add Flight' %></button>
+</form>

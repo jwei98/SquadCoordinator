@@ -4,13 +4,16 @@ const flightsController = require('../controllers/flightsController');
 
 const router = express.Router();
 
-router.get('/', flightsController.home);
-router.get('/flights/:id', flightsController.flightById);
+router.get('/', flightsController.getHome);
+router.get('/flights/:id', flightsController.getFlightById);
 
-router.get('/flights', flightsController.flights);
-router.post('/add-flight', flightsController.addFlight);
+router.get('/flights', flightsController.getFlights);
+router.post('/add-flight', flightsController.postFlight);
+
+router.get('/edit-flight/:id', flightsController.getEditFlight);
+router.post('/edit-flight', flightsController.postEditFlight);
 
 router.get('/squads', flightsController.getSquads);
-router.post('/squads', flightsController.addSquad);
+router.post('/squads', flightsController.postSquad);
 
 module.exports = router;

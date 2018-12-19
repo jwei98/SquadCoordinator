@@ -5,9 +5,6 @@
     <%- include('includes/nav.ejs') %>
     <main>
         <h1>Welcome!</h1>
-        <form action="/add-flight" method="POST">
-            <input type="datetime-local" name="flightDateTime">
-            <button type="submit">Add Flight</button>
-        </form>
+        <%- include('includes/flight-form.ejs', {editing: false}) %>
     </main>
     <%- include('includes/end.ejs') %>

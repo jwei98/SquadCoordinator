@@ -1,0 +1,10 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h1> Editing flight on <%= flight.date %> at <%= flight.time %></h1>
+        <%- include('includes/flight-form.ejs', {editing: true, flight: flight}) %>
+    </main>
+    <%- include('includes/end.ejs') %>

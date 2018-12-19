@@ -22,15 +22,24 @@ const getFlightsFromFile = (callback) => {
 };
 
 const Flight = class {
-    constructor(date, time) {
-        this.time = time;
-        this.date = date;
-        this.id = Math.random().toString();
+    constructor(id, dateTime) {
+        this.id = id;
+        this.dateTime = dateTime;
+        this.date = dateTime.toDateString();
+        this.time = dateTime.toLocaleTimeString();
     }
 
     save() {
         getFlightsFromFile((flights) => {
-            flights.push(this);
+            // if we're updating, we need to replace the flight
+            if (this.id) {
+                const flightIndex = flights.findIndex(flight => flight.id === this.id);
+                flights[flightIndex] = this;
+                // otherwise we just add the flight to our list
+            } else {
+                this.id = Math.random().toString();
+                flights.push(this);
+            }
             fs.writeFile(p, JSON.stringify(flights), (err) => {
                 console.log(err);
             });

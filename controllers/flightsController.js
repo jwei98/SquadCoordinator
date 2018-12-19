@@ -70,6 +70,17 @@ exports.postEditFlight = (req, res, next) => {
     res.redirect('/flights');
 };
 
+exports.postDeleteFlight = (req, res, next) => {
+    Flight.deleteFlight(req.body.flightId);
+    Squads.deleteFlightFromSquad(req.body.flightId);
+    res.redirect('/flights');
+};
+
+exports.postDeleteFlightFromSquad = (req, res, next) => {
+    Squads.deleteFlightFromSquad(req.body.flightId);
+    res.redirect('/squads');
+};
+
 exports.postSquad = (req, res, next) => {
     const flightId = req.body.flightId;
     Flight.findById(flightId, (flight) => {

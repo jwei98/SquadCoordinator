@@ -12,8 +12,10 @@ router.post('/add-flight', flightsController.postFlight);
 
 router.get('/edit-flight/:id', flightsController.getEditFlight);
 router.post('/edit-flight', flightsController.postEditFlight);
+router.post('/delete-flight', flightsController.postDeleteFlight);
 
 router.get('/squads', flightsController.getSquads);
+router.post('/delete-flight-from-squad', flightsController.postDeleteFlightFromSquad);
 router.post('/squads', flightsController.postSquad);
 
 module.exports = router;

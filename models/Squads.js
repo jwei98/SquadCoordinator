@@ -32,4 +32,15 @@ module.exports = class Squads {
         getSquadsFromFile(squads => callback(squads));
     }
 
+    static deleteFlightFromSquad(flightId) {
+        getSquadsFromFile((squads) => {
+            const flightInd = squads.findIndex(flight => flight.id === flightId);
+            console.log(flightInd);
+            if (flightInd >= 0) squads.splice(flightInd,1);
+            fs.writeFile(p, JSON.stringify(squads), (error) => {
+                console.log(error);
+            });
+        });
+    }
+
 };

@@ -56,6 +56,19 @@ const Flight = class {
             callback(flight);
         });
     }
+
+    static deleteFlight(id) {
+        getFlightsFromFile((flights) => {
+            const flightIndex = flights.findIndex(flight => flight.id === id);
+            if (flightIndex >= 0) {
+                flights.splice(flightIndex,1);
+            }
+            fs.writeFile(p, JSON.stringify(flights), (err) => {
+                console.log(err);
+            });
+
+        });
+    }
 };
 
 module.exports = Flight;

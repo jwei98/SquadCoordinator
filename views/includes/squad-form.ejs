@@ -1,0 +1,24 @@
+<form action="<%= editing ? '/edit-squad' : '/add-squad' %>" method="POST">
+
+    <label title="capacity">Squad Capacity: </label>
+    <input type="number" name="capacity" value="<% if (editing) { %><%=squad.capacity%><%}%>">
+    <br>
+
+    <label title="rendezvous">Rendezvous @: </label>
+    <input type="text" name="rendezvous" value="<% if (editing) { %><%=squad.rendezvous%><%}%>">
+    <br>
+
+    <label title="destination">Destination @: </label>
+    <input type="text" name="destination" value="<% if (editing) { %><%=squad.destination%><%}%>">
+    <br>
+
+    <label title="dateTime">Date/Time: </label>
+    <input type="datetime-local" name="dateTime" value="<% if (editing) { %><%=squad.dateTime.toLocaleString().replace(' ', 'T')%><%}%>">
+
+    <input type="hidden" name="id" value="<% if (editing) { %><%=squad.id%><%}%>">
+
+    <br>
+    <button type="submit">
+        <%= editing ? 'Update Squad' : 'Add Squad' %>
+    </button>
+</form>

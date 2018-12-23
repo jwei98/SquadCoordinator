@@ -1,0 +1,14 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h1> Editing squad meeting at <%= squad.date %> at <%= squad.time %></h1>
+        <%- include('includes/squad-form.ejs', {editing: true, squad: squad}) %>
+        <form action="/delete-squad" method="POST">
+            <input type="hidden" name="id" value="<%= squad.id %>">
+            <button type="submit">Delete Squad</button>
+        </form>
+    </main>
+    <%- include('includes/end.ejs') %>

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../utils/database.js');
 
-const Flight = sequelize.define('flight', {
+const Squad = sequelize.define('squad', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -31,4 +31,4 @@ const Flight = sequelize.define('flight', {
     },
 });
 
-module.exports = Flight;
+module.exports = Squad;

@@ -24,17 +24,17 @@ app.use((req, res, next) => {
 });
 
 // routes
-const flightRoutes = require('./routes/flightRoutes');
+const squadRoutes = require('./routes/squadRoutes');
 const errorController = require('./controllers/errorController');
-app.use(flightRoutes);
+app.use(squadRoutes);
 app.use(errorController.errorPage);
 
 // sequelize setup
-const Flight = require('./models/Flight');
+const Squad = require('./models/Squad');
 const User = require('./models/User');
 
-User.hasMany(Flight);
-Flight.belongsTo(User);
+User.hasMany(Squad);
+Squad.belongsTo(User);
 
 sequelize.sync()
     .then(res => {

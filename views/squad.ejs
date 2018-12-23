@@ -1,0 +1,31 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h2>
+            Squad leaving at
+            <%= squad.dateTime.toLocaleString() %>
+        </h2>
+        <h2>
+            Rendezvous @
+            <%= squad.rendezvous %>
+            to go to
+            <%= squad.destination %>
+        </h2>
+        <% if (squad.userId === uid) { %>
+            <form action="/edit-squad/<%= squad.id %>" method="GET">
+                <button type="submit">Edit Squad</button>
+            </form>
+            <form action="/delete-squad" method="POST">
+                <input type="hidden" name="id" value="<%= squad.id %>">
+                <button type="submit">Delete Squad</button>
+            </form>
+        <% } %>
+        <form action="/lineup" method="POST">
+            <input type="hidden" name="id" value="<%= squad.id %>">
+            <button type="submit">Join Squad</button>
+        </form>
+    </main>
+    <%- include('includes/end.ejs') %>

@@ -7,7 +7,7 @@
         <h1> Editing flight on <%= flight.date %> at <%= flight.time %></h1>
         <%- include('includes/flight-form.ejs', {editing: true, flight: flight}) %>
         <form action="/delete-flight" method="POST">
-            <input type="hidden" name="flightId" value="<%= flight.id %>">
+            <input type="hidden" name="id" value="<%= flight.id %>">
             <button type="submit">Delete Flight</button>
         </form>
     </main>

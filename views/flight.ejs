@@ -7,9 +7,7 @@
     <main>
         <h2>
             Flight on
-            <%= flight.date %>
-            at
-            <%= flight.time %>
+            <%= flight.dateTime.toLocaleString() %>
         </h2>
         <h2>
             Rendezvous @
@@ -21,11 +19,11 @@
             <button type="submit">Edit Flight</button>
         </form>
         <form action="/delete-flight" method="POST">
-            <input type="hidden" name="flightId" value="<%= flight.id %>">
+            <input type="hidden" name="id" value="<%= flight.id %>">
             <button type="submit">Delete Flight</button>
         </form>
         <form action="/squads" method="POST">
-            <input type="hidden" name="flightId" value="<%= flight.id %>">
+            <input type="hidden" name="id" value="<%= flight.id %>">
             <button type="submit">Join Squad</button>
         </form>
     </main>

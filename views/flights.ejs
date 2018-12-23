@@ -12,8 +12,7 @@
                 <% for (let flight of flights) { %>
                 <li>
                     <a href="/flights/<%= flight.id %>">
-                        <%= flight.date%> at
-                        <%= flight.time%>. Squad from
+                        <%= flight.dateTime.toLocaleTimeString() %> at
                         <%= flight.rendezvous %> to
                         <%= flight.destination %>
                     </a>

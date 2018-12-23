@@ -13,9 +13,9 @@
             <ul>
                 <% for (let flight of squads) { %>
                 <li>
-                    <a href="/flights/<%= flight.id %>"><%= flight.date%> <%= flight.time%></a>
+                    <a href="/flights/<%= flight.id %>"><%= flight.dateTime %> </a>
                     <form action="/delete-flight-from-squad" method="POST">
-                        <input type="hidden" name="flightId" value="<%= flight.id %>">
+                        <input type="hidden" name="id" value="<%= flight.id %>">
                         <button type="Submit">Drop</button>
                     </form>
                 </li>

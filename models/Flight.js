@@ -8,10 +8,6 @@ const Flight = sequelize.define('flight', {
         allowNull: false,
         primaryKey: true
     },
-    leaderId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-    },
     capacity: {
         type: Sequelize.INTEGER,
         allowNull: false

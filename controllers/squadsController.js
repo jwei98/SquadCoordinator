@@ -1,4 +1,3 @@
-const User = require('../models/User');
 const Squad = require('../models/Squad');
 
 exports.getHome = (req, res, next) => {
@@ -56,40 +55,49 @@ exports.getSquadById = (req, res, next) => {
         });
 };
 
-exports.getSquads = (req, res, next) => {
-    Squads.getAllSquads((squads) => {
-        const squadsData = {
-            pageTitle: 'Your Squads',
-            path: '/squads',
-            squads: squads
-        };
-        res.render('squads', squadsData);
-    });
+exports.getLineup = (req, res, next) => {
+    req.user.getLineup()
+        .then(lineup => {
+            return lineup.getSquads()
+        })
+        .then(squads => {
+            const lineupData = {
+                pageTitle: 'Your Lineup',
+                path: '/lineup',
+                lineup: squads
+            };
+            res.render('lineup', lineupData);
+        })
+        .catch(err => console.log(err));
 };
 
 // POST routes
-const createSquad = (req) => {
+
+exports.postSquad = (req, res, next) => {
+    const user = req.user;
     const dateTime = new Date(req.body.dateTime);
     const capacity = req.body.capacity;
     const rendezvous = req.body.rendezvous;
     const destination = req.body.destination;
-
-    return req.user.createSquad({
-        dateTime: dateTime,
-        capacity: capacity,
-        rendezvous: rendezvous,
-        destination: destination,
-    });
-};
-
-exports.postSquad = (req, res, next) => {
-    createSquad(req)
+    user.createSquad({
+            dateTime: dateTime,
+            capacity: capacity,
+            rendezvous: rendezvous,
+            destination: destination,
+        })
+        .then(squad => {
+            return user.getLineup()
+                .then(lineup => {
+                    lineup.addSquad(squad);
+                })
+                .catch(err => console.log(err))
+        })
         .then(result => {
             res.redirect('/squads');
         })
-        .catch(err => {
+        .catch(err =>
             console.log(err)
-        });
+        );
 };
 
 exports.postEditSquad = (req, res, next) => {
@@ -122,4 +130,35 @@ exports.postDeleteSquad = (req, res, next) => {
         .catch(err => {
             console.log(err);
         });
+};
+
+// adds a squad to user's lineup
+exports.postLineup = (req, res, next) => {
+    const squadId = req.body.id;
+    const user = req.user;
+    var userLineup;
+
+    user.getLineup()
+        .then(lineup => {
+            userLineup = lineup;
+            return lineup.getSquads({
+                where: {
+                    id: squadId
+                }
+            });
+        })
+        .then(squads => {
+            if (squads.length === 0) {
+                return Squad.findByPk(squadId);
+            } else {
+                res.redirect('/lineup');
+            }
+        })
+        .then(squad => {
+            return userLineup.addSquad(squad)
+                .then(result => res.redirect('/lineup'))
+                .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+
 };

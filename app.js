@@ -32,9 +32,21 @@ app.use(errorController.errorPage);
 // sequelize setup
 const Squad = require('./models/Squad');
 const User = require('./models/User');
+const Lineup = require('./models/Lineup');
+const LineupItem = require('./models/LineupItem');
 
 User.hasMany(Squad);
 Squad.belongsTo(User);
+
+User.hasOne(Lineup);
+Lineup.belongsTo(User);
+
+Lineup.belongsToMany(Squad, {
+    through: LineupItem
+});
+Squad.belongsToMany(Lineup, {
+    through: LineupItem
+});
 
 sequelize.sync()
     .then(res => {
@@ -52,6 +64,17 @@ sequelize.sync()
         return user;
     })
     .then(user => {
+        Lineup.findByPk(1)
+        .then(lineup => {
+            if (!lineup) {
+                user.createLineup()
+            }
+            // return user as promise
+            return lineup;
+        })
+        .catch(err => console.log(err));
+    })
+    .then(lineup => {
         app.listen(3000);
     })
     .catch(err => {

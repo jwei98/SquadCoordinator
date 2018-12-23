@@ -1,5 +1,4 @@
-const Squad = require('../models/Squad');
-const User = require('../models/User');
+const Squad = require('../models/squad');
 
 exports.getHome = (req, res, next) => {
     const homePageData = {

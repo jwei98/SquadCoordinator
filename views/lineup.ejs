@@ -1,0 +1,26 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <h1>Your Lineup:</h1>
+        <% if (lineup.length > 0) { %>
+        <div class="grid">
+            <ul>
+                <% for (let squad of lineup) { %>
+                <li>
+                    <a href="/squads/<%= squad.id %>">
+                        <%= squad.dateTime.toLocaleTimeString() %> at
+                        <%= squad.rendezvous %> to
+                        <%= squad.destination %>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+        <% } else { %>
+        <h3>You're not a part of any squads!</h3>
+        <% } %>
+    </main>
+    <%- include('includes/end.ejs') %>

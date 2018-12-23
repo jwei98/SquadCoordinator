@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', squadsController.getHome);
 router.get('/squads/:id', squadsController.getSquadById);
 
-router.get('/squads', squadsController.getSquads);
+router.get('/squads', squadsController.getAllSquads);
 router.post('/add-squad', squadsController.postSquad);
 
 router.get('/edit-squad/:id', squadsController.getEditSquad);

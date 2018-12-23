@@ -85,7 +85,6 @@ const createSquad = (req) => {
 exports.postSquad = (req, res, next) => {
     createSquad(req)
         .then(result => {
-            console.log(result);
             res.redirect('/squads');
         })
         .catch(err => {
@@ -104,7 +103,6 @@ exports.postEditSquad = (req, res, next) => {
             return squad.save();
         })
         .then(result => {
-            console.log("UPDATED squad " + id);
             res.redirect('/squads/' + id);
         })
         .catch(err => {
@@ -119,7 +117,6 @@ exports.postDeleteSquad = (req, res, next) => {
             return squad.destroy();
         })
         .then(result => {
-            console.log('DELETED squad ' + id);
             res.redirect('/squads');
         })
         .catch(err => {

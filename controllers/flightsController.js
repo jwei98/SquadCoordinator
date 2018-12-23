@@ -11,6 +11,7 @@ exports.getHome = (req, res, next) => {
 };
 
 exports.getFlights = (req, res, next) => {
+    // we want to display all flights
     Flight.findAll()
         .then(result => {
             const flightsPageData = {
@@ -28,11 +29,11 @@ exports.getFlights = (req, res, next) => {
 exports.getEditFlight = (req, res, next) => {
     const id = req.params.id;
     Flight.findByPk(id)
-        .then(result => {
+        .then(flight => {
             res.render('edit-flight', {
                 pageTitle: "Editing Flight",
                 path: "/edit-flight",
-                flight: result
+                flight: flight
             })
         })
         .catch(err => {
@@ -47,7 +48,8 @@ exports.getFlightById = (req, res, next) => {
             res.render('flight', {
                 pageTitle: "Flight " + id,
                 path: "/edit-flight",
-                flight: result
+                flight: result,
+                uid: req.user.id
             })
         })
         .catch(err => {

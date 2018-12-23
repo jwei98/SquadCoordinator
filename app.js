@@ -36,9 +36,7 @@ const User = require('./models/User');
 User.hasMany(Flight);
 Flight.belongsTo(User);
 
-sequelize.sync({
-        force: true
-    })
+sequelize.sync()
     .then(res => {
         return User.findByPk(1);
     })

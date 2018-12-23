@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
-    database: 'flight_coordinator',
+    database: 'squad-coordinator',
     host: 'localhost',
     username: 'root',
     password: '',

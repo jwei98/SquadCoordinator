@@ -1,5 +1,4 @@
-const Flight = require('../models/Flight');
-const Squads = require('../models/Squads');
+const Squad = require('../models/Squad');
 const User = require('../models/User');
 
 exports.getHome = (req, res, next) => {
@@ -10,30 +9,30 @@ exports.getHome = (req, res, next) => {
     res.render('home', homePageData);
 };
 
-exports.getFlights = (req, res, next) => {
-    // we want to display all flights
-    Flight.findAll()
+exports.getSquads = (req, res, next) => {
+    // we want to display all squads
+    Squad.findAll()
         .then(result => {
-            const flightsPageData = {
-                pageTitle: 'Flights',
-                path: '/flights',
-                flights: result
+            const squadsPageData = {
+                pageTitle: 'Squads',
+                path: '/squads',
+                squads: result
             };
-            res.render('flights', flightsPageData);
+            res.render('squads', squadsPageData);
         })
         .catch(err => {
             console.log(err);
         })
 };
 
-exports.getEditFlight = (req, res, next) => {
+exports.getEditSquad = (req, res, next) => {
     const id = req.params.id;
-    Flight.findByPk(id)
-        .then(flight => {
-            res.render('edit-flight', {
-                pageTitle: "Editing Flight",
-                path: "/edit-flight",
-                flight: flight
+    Squad.findByPk(id)
+        .then(squad => {
+            res.render('edit-squad', {
+                pageTitle: "Editing Squad",
+                path: "/edit-squad",
+                squad: squad
             })
         })
         .catch(err => {
@@ -41,14 +40,14 @@ exports.getEditFlight = (req, res, next) => {
         });
 };
 
-exports.getFlightById = (req, res, next) => {
+exports.getSquadById = (req, res, next) => {
     const id = req.params.id;
-    Flight.findByPk(id)
+    Squad.findByPk(id)
         .then(result => {
-            res.render('flight', {
-                pageTitle: "Flight " + id,
-                path: "/edit-flight",
-                flight: result,
+            res.render('squad', {
+                pageTitle: "Squad " + id,
+                path: "/edit-squad",
+                squad: result,
                 uid: req.user.id
             })
         })
@@ -69,13 +68,13 @@ exports.getSquads = (req, res, next) => {
 };
 
 // POST routes
-const createFlight = (req) => {
+const createSquad = (req) => {
     const dateTime = new Date(req.body.dateTime);
     const capacity = req.body.capacity;
     const rendezvous = req.body.rendezvous;
     const destination = req.body.destination;
 
-    return req.user.createFlight({
+    return req.user.createSquad({
         dateTime: dateTime,
         capacity: capacity,
         rendezvous: rendezvous,
@@ -83,60 +82,60 @@ const createFlight = (req) => {
     });
 };
 
-exports.postFlight = (req, res, next) => {
-    createFlight(req)
+exports.postSquad = (req, res, next) => {
+    createSquad(req)
         .then(result => {
             console.log(result);
-            res.redirect('/flights');
+            res.redirect('/squads');
         })
         .catch(err => {
             console.log(err)
         });
 };
 
-exports.postEditFlight = (req, res, next) => {
+exports.postEditSquad = (req, res, next) => {
     const id = req.body.id;
-    Flight.findByPk(id)
-        .then(flight => {
-            flight.dateTime = new Date(req.body.dateTime);
-            flight.capacity = req.body.capacity;
-            flight.rendezvous = req.body.rendezvous;
-            flight.destination = req.body.destination;
-            return flight.save();
+    Squad.findByPk(id)
+        .then(squad => {
+            squad.dateTime = new Date(req.body.dateTime);
+            squad.capacity = req.body.capacity;
+            squad.rendezvous = req.body.rendezvous;
+            squad.destination = req.body.destination;
+            return squad.save();
         })
         .then(result => {
-            console.log("UPDATED flight " + id);
-            res.redirect('/flights/' + id);
+            console.log("UPDATED squad " + id);
+            res.redirect('/squads/' + id);
         })
         .catch(err => {
             console.log(err);
         });
 };
 
-exports.postDeleteFlight = (req, res, next) => {
+exports.postDeleteSquad = (req, res, next) => {
     const id = req.body.id;
-    Flight.findByPk(id)
-        .then(flight => {
-            return flight.destroy();
+    Squad.findByPk(id)
+        .then(squad => {
+            return squad.destroy();
         })
         .then(result => {
-            console.log('DELETED flight ' + id);
-            res.redirect('/flights');
+            console.log('DELETED squad ' + id);
+            res.redirect('/squads');
         })
         .catch(err => {
             console.log(err);
         });
 };
 
-exports.postDeleteFlightFromSquad = (req, res, next) => {
-    Squads.deleteFlightFromSquad(req.body.id);
+exports.postDeleteSquadFromSquad = (req, res, next) => {
+    Squads.deleteSquadFromSquad(req.body.id);
     res.redirect('/squads');
 };
 
 exports.postSquad = (req, res, next) => {
     const id = req.body.id;
-    Flight.findByPk(id, (flight) => {
-        Squads.addFlight(flight);
+    Squad.findByPk(id, (squad) => {
+        Squads.addSquad(squad);
         res.redirect('/squads');
     });
 };

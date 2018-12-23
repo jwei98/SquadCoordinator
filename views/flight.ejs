@@ -1,31 +1,31 @@
 <%- include('includes/head.ejs') %>
-<link rel="stylesheet" href="/css/flights.css">
+<link rel="stylesheet" href="/css/squads.css">
 </head>
 
 <body>
     <%- include('includes/nav.ejs') %>
     <main>
         <h2>
-            Flight on
-            <%= flight.dateTime.toLocaleString() %>
+            Squad on
+            <%= squad.dateTime.toLocaleString() %>
         </h2>
         <h2>
             Rendezvous @
-            <%= flight.rendezvous %>
+            <%= squad.rendezvous %>
             to go to
-            <%= flight.destination %>
+            <%= squad.destination %>
         </h2>
-        <% if (flight.userId === uid) { %>
-            <form action="/edit-flight/<%= flight.id %>" method="GET">
-                <button type="submit">Edit Flight</button>
+        <% if (squad.userId === uid) { %>
+            <form action="/edit-squad/<%= squad.id %>" method="GET">
+                <button type="submit">Edit Squad</button>
             </form>
-            <form action="/delete-flight" method="POST">
-                <input type="hidden" name="id" value="<%= flight.id %>">
-                <button type="submit">Delete Flight</button>
+            <form action="/delete-squad" method="POST">
+                <input type="hidden" name="id" value="<%= squad.id %>">
+                <button type="submit">Delete Squad</button>
             </form>
         <% } %>
         <form action="/squads" method="POST">
-            <input type="hidden" name="id" value="<%= flight.id %>">
+            <input type="hidden" name="id" value="<%= squad.id %>">
             <button type="submit">Join Squad</button>
         </form>
     </main>

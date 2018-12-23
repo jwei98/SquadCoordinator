@@ -1,5 +1,6 @@
 const Flight = require('../models/Flight');
 const Squads = require('../models/Squads');
+const User = require('../models/User');
 
 exports.getHome = (req, res, next) => {
     const homePageData = {
@@ -10,6 +11,7 @@ exports.getHome = (req, res, next) => {
 };
 
 exports.getFlights = (req, res, next) => {
+    // we want to display all flights
     Flight.findAll()
         .then(result => {
             const flightsPageData = {
@@ -27,11 +29,11 @@ exports.getFlights = (req, res, next) => {
 exports.getEditFlight = (req, res, next) => {
     const id = req.params.id;
     Flight.findByPk(id)
-        .then(result => {
+        .then(flight => {
             res.render('edit-flight', {
                 pageTitle: "Editing Flight",
                 path: "/edit-flight",
-                flight: result
+                flight: flight
             })
         })
         .catch(err => {
@@ -46,7 +48,8 @@ exports.getFlightById = (req, res, next) => {
             res.render('flight', {
                 pageTitle: "Flight " + id,
                 path: "/edit-flight",
-                flight: result
+                flight: result,
+                uid: req.user.id
             })
         })
         .catch(err => {
@@ -67,14 +70,12 @@ exports.getSquads = (req, res, next) => {
 
 // POST routes
 const createFlight = (req) => {
-    const leaderId = req.body.leaderId;
     const dateTime = new Date(req.body.dateTime);
     const capacity = req.body.capacity;
     const rendezvous = req.body.rendezvous;
     const destination = req.body.destination;
 
-    return Flight.create({
-        leaderId: leaderId,
+    return req.user.createFlight({
         dateTime: dateTime,
         capacity: capacity,
         rendezvous: rendezvous,
@@ -93,17 +94,10 @@ exports.postFlight = (req, res, next) => {
         });
 };
 
-const updateFlight = (req) => {
-    Flight.update({
-
-    })
-};
-
 exports.postEditFlight = (req, res, next) => {
     const id = req.body.id;
     Flight.findByPk(id)
         .then(flight => {
-            flight.leaderId = req.body.leaderId;
             flight.dateTime = new Date(req.body.dateTime);
             flight.capacity = req.body.capacity;
             flight.rendezvous = req.body.rendezvous;

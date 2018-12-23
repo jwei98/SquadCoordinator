@@ -15,13 +15,15 @@
             to go to
             <%= flight.destination %>
         </h2>
-        <form action="/edit-flight/<%= flight.id %>" method="GET">
-            <button type="submit">Edit Flight</button>
-        </form>
-        <form action="/delete-flight" method="POST">
-            <input type="hidden" name="id" value="<%= flight.id %>">
-            <button type="submit">Delete Flight</button>
-        </form>
+        <% if (flight.userId === uid) { %>
+            <form action="/edit-flight/<%= flight.id %>" method="GET">
+                <button type="submit">Edit Flight</button>
+            </form>
+            <form action="/delete-flight" method="POST">
+                <input type="hidden" name="id" value="<%= flight.id %>">
+                <button type="submit">Delete Flight</button>
+            </form>
+        <% } %>
         <form action="/squads" method="POST">
             <input type="hidden" name="id" value="<%= flight.id %>">
             <button type="submit">Join Squad</button>

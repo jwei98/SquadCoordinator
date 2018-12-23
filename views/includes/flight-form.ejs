@@ -1,9 +1,4 @@
-<%/* TODO: converting datetime to correct format is hacky */%>
 <form action="<%= editing ? '/edit-flight' : '/add-flight' %>" method="POST">
-
-    <label title="squadLeaderId">User ID: </label>
-    <input type="number" name="leaderId" value="<% if (editing) { %><%=flight.leaderId%><%}%>">
-    <br>
 
     <label title="capacity">Squad Capacity: </label>
     <input type="number" name="capacity" value="<% if (editing) { %><%=flight.capacity%><%}%>">

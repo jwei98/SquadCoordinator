@@ -65,14 +65,14 @@ sequelize.sync()
     })
     .then(user => {
         Lineup.findByPk(1)
-        .then(lineup => {
-            if (!lineup) {
-                user.createLineup()
-            }
-            // return user as promise
-            return lineup;
-        })
-        .catch(err => console.log(err));
+            .then(lineup => {
+                if (!lineup) {
+                    user.createLineup()
+                }
+                // return user as promise
+                return lineup;
+            })
+            .catch(err => console.log(err));
     })
     .then(lineup => {
         app.listen(3000);

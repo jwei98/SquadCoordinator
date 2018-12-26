@@ -10,11 +10,13 @@
             <ul>
                 <% for (let squad of lineup) { %>
                 <li>
-                    <a href="/squads/<%= squad.id %>">
-                        <%= squad.dateTime.toLocaleTimeString() %> at
-                        <%= squad.rendezvous %> to
-                        <%= squad.destination %>
-                    </a>
+                    <%= squad.dateTime.toLocaleTimeString() %> at
+                    <%= squad.rendezvous %> to
+                    <%= squad.destination %>
+                    <form action="/remove-from-lineup" method="POST">
+                        <input type="hidden" name="id" value="<%= squad.id %>">
+                        <button type="submit">Remove</button>
+                    </form>
                 </li>
                 <% } %>
             </ul>

@@ -16,5 +16,6 @@ router.post('/delete-squad', squadsController.postDeleteSquad);
 
 router.get('/lineup', squadsController.getLineup);
 router.post('/lineup', squadsController.postLineup);
+router.post('/remove-from-lineup', squadsController.postRemoveFromLineup);
 
 module.exports = router;

@@ -41,18 +41,41 @@ exports.getEditSquad = (req, res, next) => {
 
 exports.getSquadById = (req, res, next) => {
     const id = req.params.id;
-    Squad.findByPk(id)
-        .then(result => {
-            res.render('squad', {
-                pageTitle: "Squad " + id,
-                path: "/edit-squad",
-                squad: result,
-                uid: req.user.id
+    const user = req.user;
+
+    user.getLineup()
+        .then(lineup => {
+            return lineup.getSquads({
+                where: {
+                    id: id
+                }
             })
         })
-        .catch(err => {
-            console.log(err);
-        });
+        .then(squads => {
+            // doesn't exist in user's lineup
+            if (squads.length == 0) {
+                return false
+            } else {
+                return true
+            }
+        })
+        .then(inLineup => {
+            console.log(inLineup);
+            Squad.findByPk(id)
+                .then(result => {
+                    res.render('squad', {
+                        pageTitle: "Squad " + id,
+                        path: "/squads/" + id,
+                        squad: result,
+                        uid: req.user.id,
+                        inUserLineup: inLineup
+                    })
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        })
+        .catch(err => console.log(err));
 };
 
 exports.getLineup = (req, res, next) => {
@@ -158,6 +181,21 @@ exports.postLineup = (req, res, next) => {
             return userLineup.addSquad(squad)
                 .then(result => res.redirect('/lineup'))
                 .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+
+};
+
+// TODO: leaving a squad should remove it from lineup but not delete it from squads table
+exports.postRemoveFromLineup = (req, res, next) => {
+    const squadId = req.body.id;
+    const user = req.user;
+    var userLineup;
+
+    user.getLineup()
+        .then(lineup => {
+            console.log(lineup);
+            res.redirect('/lineup');
         })
         .catch(err => console.log(err));
 

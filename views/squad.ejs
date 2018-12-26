@@ -23,9 +23,16 @@
                 <button type="submit">Delete Squad</button>
             </form>
         <% } %>
-        <form action="/lineup" method="POST">
-            <input type="hidden" name="id" value="<%= squad.id %>">
-            <button type="submit">Join Squad</button>
-        </form>
+        <% if (!inUserLineup) { %>
+            <form action="/lineup" method="POST">
+                <input type="hidden" name="id" value="<%= squad.id %>">
+                <button type="submit">Join Squad</button>
+            </form>
+        <% } else { %>
+            <form action="/remove-from-lineup" method="POST">
+                <input type="hidden" name="id" value="<%= squad.id %>">
+                <button type="submit">Leave Squad</button>
+            </form>
+        <% } %>
     </main>
     <%- include('includes/end.ejs') %>

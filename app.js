@@ -25,8 +25,11 @@ app.use((req, res, next) => {
 
 // routes
 const squadRoutes = require('./routes/squadRoutes');
+const lineupRoutes = require('./routes/lineupRoutes');
 const errorController = require('./controllers/errorController');
+
 app.use(squadRoutes);
+app.use(lineupRoutes);
 app.use(errorController.errorPage);
 
 // sequelize setup

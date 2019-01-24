@@ -3,7 +3,7 @@ const Squad = require('../models/Squad');
 exports.getLineup = (req, res, next) => {
     req.user.getLineup()
         .then(lineup => {
-            return lineup.getSquads()
+            return lineup.getSquads();
         })
         .then(squads => {
             const lineupData = {
@@ -32,10 +32,11 @@ exports.postLineup = (req, res, next) => {
             });
         })
         .then(squads => {
+            // if we haven't added this squad to the linep yet
             if (squads.length === 0) {
                 return Squad.findByPk(squadId);
             } else {
-                res.redirect('/lineup');
+                return squads[0];
             }
         })
         .then(squad => {
@@ -50,14 +51,21 @@ exports.postLineup = (req, res, next) => {
 // TODO: leaving a squad should remove it from lineup but not delete it from squads table
 exports.postRemoveFromLineup = (req, res, next) => {
     const squadId = req.body.id;
-    const user = req.user;
-    var userLineup;
-
-    user.getLineup()
+    console.log(squadId);
+    req.user.getLineup()
         .then(lineup => {
-            console.log(lineup);
+            return lineup.getSquads({
+                where: {
+                    id: squadId
+                }
+            });
+        })
+        .then(squads => {
+            const squad = squads[0];
+            return squad.lineupItem.destroy();
+        })
+        .then(result => {
             res.redirect('/lineup');
         })
         .catch(err => console.log(err));
-
 };

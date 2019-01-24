@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 
 const sequelize = require('./utils/database');
 
+
 // meta setup
 const app = express();
 app.set('view engine', 'ejs');
@@ -79,6 +80,7 @@ sequelize.sync()
             .catch(err => console.log(err));
     })
     .then(lineup => {
+        console.log('Listening on port 3000');
         app.listen(3000);
     })
     .catch(err => {

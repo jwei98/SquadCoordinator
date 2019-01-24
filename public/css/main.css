@@ -45,3 +45,7 @@ main {
 .nav-list_item a.active {
   color: #ffeb3b;
 }
+
+.list-item {
+    display: flex;
+}

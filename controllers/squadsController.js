@@ -21,7 +21,7 @@ exports.getAllSquads = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
-        })
+        });
 };
 
 exports.getEditSquad = (req, res, next) => {
@@ -32,7 +32,7 @@ exports.getEditSquad = (req, res, next) => {
                 pageTitle: "Editing Squad",
                 path: "/edit-squad",
                 squad: squad
-            })
+            });
         })
         .catch(err => {
             console.log(err);
@@ -49,14 +49,14 @@ exports.getSquadById = (req, res, next) => {
                 where: {
                     id: id
                 }
-            })
+            });
         })
         .then(squads => {
             // doesn't exist in user's lineup
             if (squads.length == 0) {
-                return false
+                return false;
             } else {
-                return true
+                return true;
             }
         })
         .then(inLineup => {
@@ -69,7 +69,7 @@ exports.getSquadById = (req, res, next) => {
                         squad: result,
                         uid: req.user.id,
                         inUserLineup: inLineup
-                    })
+                    });
                 })
                 .catch(err => {
                     console.log(err);
@@ -98,7 +98,7 @@ exports.postSquad = (req, res, next) => {
                 .then(lineup => {
                     lineup.addSquad(squad);
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log(err));
         })
         .then(result => {
             res.redirect('/squads');

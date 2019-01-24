@@ -51,7 +51,6 @@ exports.postLineup = (req, res, next) => {
 // TODO: leaving a squad should remove it from lineup but not delete it from squads table
 exports.postRemoveFromLineup = (req, res, next) => {
     const squadId = req.body.id;
-    console.log(squadId);
     req.user.getLineup()
         .then(lineup => {
             return lineup.getSquads({

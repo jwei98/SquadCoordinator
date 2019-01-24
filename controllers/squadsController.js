@@ -60,7 +60,6 @@ exports.getSquadById = (req, res, next) => {
             }
         })
         .then(inLineup => {
-            console.log(inLineup);
             Squad.findByPk(id)
                 .then(result => {
                     res.render('squad', {

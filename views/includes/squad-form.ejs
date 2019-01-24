@@ -12,6 +12,7 @@
     <input type="text" name="destination" value="<% if (editing) { %><%=squad.destination%><%}%>">
     <br>
 
+    <% //TODO: This doesn't work for dates where it doesn't exactly match format dd:mm:yyyy... i.e. 1:1:2019 fails but 12:12:2019 works%>
     <label title="dateTime">Date/Time: </label>
     <input type="datetime-local" name="dateTime" value="<% if (editing) { %><%=squad.dateTime.toLocaleString().replace(' ', 'T')%><%}%>">
 
